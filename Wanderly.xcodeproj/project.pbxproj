@@ -6,6 +6,17 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		42FC35012CFFD8FB00F1BF98 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42FC34FD2CFFD8FB00F1BF98 /* LoginView.swift */; };
+		42FC35022CFFD8FB00F1BF98 /* WanderlyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42FC34FF2CFFD8FB00F1BF98 /* WanderlyApp.swift */; };
+		42FC35032CFFD8FB00F1BF98 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 42FC34FA2CFFD8FB00F1BF98 /* Preview Assets.xcassets */; };
+		42FC35042CFFD8FB00F1BF98 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 42FC34FC2CFFD8FB00F1BF98 /* Assets.xcassets */; };
+		42FC35052CFFD8FB00F1BF98 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 42FC34FE2CFFD8FB00F1BF98 /* GoogleService-Info.plist */; };
+		42FC35082CFFDA8A00F1BF98 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 42FC35072CFFDA8A00F1BF98 /* FirebaseAuth */; };
+		42FC350A2CFFDA8A00F1BF98 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 42FC35092CFFDA8A00F1BF98 /* FirebaseFirestore */; };
+		42FC350C2CFFDA8A00F1BF98 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 42FC350B2CFFDA8A00F1BF98 /* FirebaseStorage */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		42FC34DC2CFFD56900F1BF98 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,14 +38,15 @@
 		42FC34CB2CFFD56800F1BF98 /* Wanderly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Wanderly.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		42FC34DB2CFFD56900F1BF98 /* WanderlyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WanderlyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		42FC34E52CFFD56900F1BF98 /* WanderlyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WanderlyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		42FC34FA2CFFD8FB00F1BF98 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		42FC34FC2CFFD8FB00F1BF98 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		42FC34FD2CFFD8FB00F1BF98 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		42FC34FE2CFFD8FB00F1BF98 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		42FC34FF2CFFD8FB00F1BF98 /* WanderlyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WanderlyApp.swift; sourceTree = "<group>"; };
+		42FC35172CFFE8B900F1BF98 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		42FC34CD2CFFD56800F1BF98 /* Wanderly */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Wanderly;
-			sourceTree = "<group>";
-		};
 		42FC34DE2CFFD56900F1BF98 /* WanderlyTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = WanderlyTests;
@@ -45,6 +57,11 @@
 			path = WanderlyUITests;
 			sourceTree = "<group>";
 		};
+		42FC35152CFFE84900F1BF98 /* Fonts */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +69,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42FC35082CFFDA8A00F1BF98 /* FirebaseAuth in Frameworks */,
+				42FC350A2CFFDA8A00F1BF98 /* FirebaseFirestore in Frameworks */,
+				42FC350C2CFFDA8A00F1BF98 /* FirebaseStorage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,7 +95,7 @@
 		42FC34C22CFFD56800F1BF98 = {
 			isa = PBXGroup;
 			children = (
-				42FC34CD2CFFD56800F1BF98 /* Wanderly */,
+				42FC35002CFFD8FB00F1BF98 /* Wanderly */,
 				42FC34DE2CFFD56900F1BF98 /* WanderlyTests */,
 				42FC34E82CFFD56900F1BF98 /* WanderlyUITests */,
 				42FC34CC2CFFD56800F1BF98 /* Products */,
@@ -90,6 +110,28 @@
 				42FC34E52CFFD56900F1BF98 /* WanderlyUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		42FC34FB2CFFD8FB00F1BF98 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				42FC34FA2CFFD8FB00F1BF98 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		42FC35002CFFD8FB00F1BF98 /* Wanderly */ = {
+			isa = PBXGroup;
+			children = (
+				42FC35172CFFE8B900F1BF98 /* Info.plist */,
+				42FC35152CFFE84900F1BF98 /* Fonts */,
+				42FC34FB2CFFD8FB00F1BF98 /* Preview Content */,
+				42FC34FC2CFFD8FB00F1BF98 /* Assets.xcassets */,
+				42FC34FD2CFFD8FB00F1BF98 /* LoginView.swift */,
+				42FC34FF2CFFD8FB00F1BF98 /* WanderlyApp.swift */,
+				42FC34FE2CFFD8FB00F1BF98 /* GoogleService-Info.plist */,
+			);
+			path = Wanderly;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -108,10 +150,13 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				42FC34CD2CFFD56800F1BF98 /* Wanderly */,
+				42FC35152CFFE84900F1BF98 /* Fonts */,
 			);
 			name = Wanderly;
 			packageProductDependencies = (
+				42FC35072CFFDA8A00F1BF98 /* FirebaseAuth */,
+				42FC35092CFFDA8A00F1BF98 /* FirebaseFirestore */,
+				42FC350B2CFFDA8A00F1BF98 /* FirebaseStorage */,
 			);
 			productName = Wanderly;
 			productReference = 42FC34CB2CFFD56800F1BF98 /* Wanderly.app */;
@@ -195,6 +240,9 @@
 			);
 			mainGroup = 42FC34C22CFFD56800F1BF98;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				42FC35062CFFD9CD00F1BF98 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 42FC34CC2CFFD56800F1BF98 /* Products */;
 			projectDirPath = "";
@@ -212,6 +260,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42FC35032CFFD8FB00F1BF98 /* Preview Assets.xcassets in Resources */,
+				42FC35042CFFD8FB00F1BF98 /* Assets.xcassets in Resources */,
+				42FC35052CFFD8FB00F1BF98 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -236,6 +287,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42FC35012CFFD8FB00F1BF98 /* LoginView.swift in Sources */,
+				42FC35022CFFD8FB00F1BF98 /* WanderlyApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -399,9 +452,9 @@
 				DEVELOPMENT_TEAM = K39XXFTQ3J;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Wanderly/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -428,9 +481,9 @@
 				DEVELOPMENT_TEAM = K39XXFTQ3J;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Wanderly/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -558,6 +611,35 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		42FC35062CFFD9CD00F1BF98 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.6.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		42FC35072CFFDA8A00F1BF98 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 42FC35062CFFD9CD00F1BF98 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		42FC35092CFFDA8A00F1BF98 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 42FC35062CFFD9CD00F1BF98 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		42FC350B2CFFDA8A00F1BF98 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 42FC35062CFFD9CD00F1BF98 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 42FC34C32CFFD56800F1BF98 /* Project object */;
 }
