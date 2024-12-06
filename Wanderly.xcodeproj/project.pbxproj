@@ -7,7 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		42FC35012CFFD8FB00F1BF98 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42FC34FD2CFFD8FB00F1BF98 /* LoginView.swift */; };
+		428D08652D035B6900E721FC /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428D08642D035B6900E721FC /* SignUpView.swift */; };
+		42A256532D0131080035C31F /* DestinationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A256522D0131080035C31F /* DestinationView.swift */; };
+		42A2566C2D015AF30035C31F /* BucketListDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A2566B2D015AF30035C31F /* BucketListDetailView.swift */; };
+		42A2567E2D01885F0035C31F /* ExpandableActivitiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A2567D2D01885F0035C31F /* ExpandableActivitiesView.swift */; };
+		42AE207C2D029A12008AFEB4 /* APIKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 42AE207B2D029A12008AFEB4 /* APIKeys.plist */; };
+		42AE207E2D02AB45008AFEB4 /* countries.json in Resources */ = {isa = PBXBuildFile; fileRef = 42AE207D2D02AB45008AFEB4 /* countries.json */; };
+		42AE20F52D02E890008AFEB4 /* CityListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42AE20F42D02E890008AFEB4 /* CityListView.swift */; };
+		42AE20F72D02E8B8008AFEB4 /* SelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42AE20F62D02E8B8008AFEB4 /* SelectionView.swift */; };
+		42D2FC0D2D00BDE200910A1E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D2FC052D00BDE200910A1E /* ContentView.swift */; };
+		42D2FC0E2D00BDE200910A1E /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D2FC062D00BDE200910A1E /* ActivityView.swift */; };
+		42D2FC0F2D00BDE200910A1E /* InteractiveMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D2FC072D00BDE200910A1E /* InteractiveMapView.swift */; };
+		42D2FC102D00BDE200910A1E /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D2FC082D00BDE200910A1E /* LoginView.swift */; };
+		42D2FC112D00BDE200910A1E /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D2FC092D00BDE200910A1E /* SettingsView.swift */; };
+		42D2FC122D00BDE200910A1E /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D2FC0A2D00BDE200910A1E /* WelcomeView.swift */; };
+		42D2FC132D00BDE200910A1E /* BucketListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D2FC0B2D00BDE200910A1E /* BucketListView.swift */; };
 		42FC35022CFFD8FB00F1BF98 /* WanderlyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42FC34FF2CFFD8FB00F1BF98 /* WanderlyApp.swift */; };
 		42FC35032CFFD8FB00F1BF98 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 42FC34FA2CFFD8FB00F1BF98 /* Preview Assets.xcassets */; };
 		42FC35042CFFD8FB00F1BF98 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 42FC34FC2CFFD8FB00F1BF98 /* Assets.xcassets */; };
@@ -35,18 +49,42 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		428D08642D035B6900E721FC /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
+		42A256522D0131080035C31F /* DestinationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationView.swift; sourceTree = "<group>"; };
+		42A2566B2D015AF30035C31F /* BucketListDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BucketListDetailView.swift; sourceTree = "<group>"; };
+		42A2567D2D01885F0035C31F /* ExpandableActivitiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableActivitiesView.swift; sourceTree = "<group>"; };
+		42AE207B2D029A12008AFEB4 /* APIKeys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = APIKeys.plist; sourceTree = "<group>"; };
+		42AE207D2D02AB45008AFEB4 /* countries.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = countries.json; sourceTree = "<group>"; };
+		42AE20F42D02E890008AFEB4 /* CityListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityListView.swift; sourceTree = "<group>"; };
+		42AE20F62D02E8B8008AFEB4 /* SelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionView.swift; sourceTree = "<group>"; };
+		42D2FC052D00BDE200910A1E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		42D2FC062D00BDE200910A1E /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
+		42D2FC072D00BDE200910A1E /* InteractiveMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractiveMapView.swift; sourceTree = "<group>"; };
+		42D2FC082D00BDE200910A1E /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		42D2FC092D00BDE200910A1E /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		42D2FC0A2D00BDE200910A1E /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
+		42D2FC0B2D00BDE200910A1E /* BucketListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BucketListView.swift; sourceTree = "<group>"; };
 		42FC34CB2CFFD56800F1BF98 /* Wanderly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Wanderly.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		42FC34DB2CFFD56900F1BF98 /* WanderlyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WanderlyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		42FC34E52CFFD56900F1BF98 /* WanderlyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WanderlyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		42FC34FA2CFFD8FB00F1BF98 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		42FC34FC2CFFD8FB00F1BF98 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		42FC34FD2CFFD8FB00F1BF98 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		42FC34FE2CFFD8FB00F1BF98 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		42FC34FF2CFFD8FB00F1BF98 /* WanderlyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WanderlyApp.swift; sourceTree = "<group>"; };
-		42FC35172CFFE8B900F1BF98 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		42FC35172CFFE8B900F1BF98 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		42D2FBFC2D00B0D100910A1E /* Model */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Model;
+			sourceTree = "<group>";
+		};
+		42D2FC012D00B0EC00910A1E /* View Models */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "View Models";
+			sourceTree = "<group>";
+		};
 		42FC34DE2CFFD56900F1BF98 /* WanderlyTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = WanderlyTests;
@@ -92,6 +130,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		42D2FC0C2D00BDE200910A1E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				42D2FC082D00BDE200910A1E /* LoginView.swift */,
+				428D08642D035B6900E721FC /* SignUpView.swift */,
+				42D2FC052D00BDE200910A1E /* ContentView.swift */,
+				42D2FC0A2D00BDE200910A1E /* WelcomeView.swift */,
+				42D2FC062D00BDE200910A1E /* ActivityView.swift */,
+				42A256522D0131080035C31F /* DestinationView.swift */,
+				42D2FC072D00BDE200910A1E /* InteractiveMapView.swift */,
+				42D2FC092D00BDE200910A1E /* SettingsView.swift */,
+				42D2FC0B2D00BDE200910A1E /* BucketListView.swift */,
+				42A2566B2D015AF30035C31F /* BucketListDetailView.swift */,
+				42A2567D2D01885F0035C31F /* ExpandableActivitiesView.swift */,
+				42AE20F42D02E890008AFEB4 /* CityListView.swift */,
+				42AE20F62D02E8B8008AFEB4 /* SelectionView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		42FC34C22CFFD56800F1BF98 = {
 			isa = PBXGroup;
 			children = (
@@ -123,13 +181,17 @@
 		42FC35002CFFD8FB00F1BF98 /* Wanderly */ = {
 			isa = PBXGroup;
 			children = (
-				42FC35172CFFE8B900F1BF98 /* Info.plist */,
-				42FC35152CFFE84900F1BF98 /* Fonts */,
-				42FC34FB2CFFD8FB00F1BF98 /* Preview Content */,
-				42FC34FC2CFFD8FB00F1BF98 /* Assets.xcassets */,
-				42FC34FD2CFFD8FB00F1BF98 /* LoginView.swift */,
 				42FC34FF2CFFD8FB00F1BF98 /* WanderlyApp.swift */,
+				42D2FC0C2D00BDE200910A1E /* Views */,
+				42D2FBFC2D00B0D100910A1E /* Model */,
+				42D2FC012D00B0EC00910A1E /* View Models */,
+				42FC34FC2CFFD8FB00F1BF98 /* Assets.xcassets */,
+				42FC35152CFFE84900F1BF98 /* Fonts */,
+				42AE207B2D029A12008AFEB4 /* APIKeys.plist */,
 				42FC34FE2CFFD8FB00F1BF98 /* GoogleService-Info.plist */,
+				42FC35172CFFE8B900F1BF98 /* Info.plist */,
+				42FC34FB2CFFD8FB00F1BF98 /* Preview Content */,
+				42AE207D2D02AB45008AFEB4 /* countries.json */,
 			);
 			path = Wanderly;
 			sourceTree = "<group>";
@@ -150,6 +212,8 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				42D2FBFC2D00B0D100910A1E /* Model */,
+				42D2FC012D00B0EC00910A1E /* View Models */,
 				42FC35152CFFE84900F1BF98 /* Fonts */,
 			);
 			name = Wanderly;
@@ -260,7 +324,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42AE207E2D02AB45008AFEB4 /* countries.json in Resources */,
 				42FC35032CFFD8FB00F1BF98 /* Preview Assets.xcassets in Resources */,
+				42AE207C2D029A12008AFEB4 /* APIKeys.plist in Resources */,
 				42FC35042CFFD8FB00F1BF98 /* Assets.xcassets in Resources */,
 				42FC35052CFFD8FB00F1BF98 /* GoogleService-Info.plist in Resources */,
 			);
@@ -287,7 +353,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				42FC35012CFFD8FB00F1BF98 /* LoginView.swift in Sources */,
+				42A2567E2D01885F0035C31F /* ExpandableActivitiesView.swift in Sources */,
+				42D2FC0D2D00BDE200910A1E /* ContentView.swift in Sources */,
+				428D08652D035B6900E721FC /* SignUpView.swift in Sources */,
+				42A2566C2D015AF30035C31F /* BucketListDetailView.swift in Sources */,
+				42D2FC0E2D00BDE200910A1E /* ActivityView.swift in Sources */,
+				42AE20F72D02E8B8008AFEB4 /* SelectionView.swift in Sources */,
+				42D2FC0F2D00BDE200910A1E /* InteractiveMapView.swift in Sources */,
+				42D2FC102D00BDE200910A1E /* LoginView.swift in Sources */,
+				42D2FC112D00BDE200910A1E /* SettingsView.swift in Sources */,
+				42D2FC122D00BDE200910A1E /* WelcomeView.swift in Sources */,
+				42A256532D0131080035C31F /* DestinationView.swift in Sources */,
+				42AE20F52D02E890008AFEB4 /* CityListView.swift in Sources */,
+				42D2FC132D00BDE200910A1E /* BucketListView.swift in Sources */,
 				42FC35022CFFD8FB00F1BF98 /* WanderlyApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
