@@ -1,20 +1,7 @@
-//
-//  CityListView.swift
-//  Wanderly
-//
-//  Created by Anora Zhu on 12/6/24.
-//
-
-//
-//  CityListView.swift
-//  Wanderly
-//
-//  Created by Anora Zhu on 12/6/24.
-//
-
 import SwiftUI
 
 struct CityListView: View {
+    @Binding var selectedCity: City?
     @State var cityViewModel = CityViewModel()
     @State private var cityName: String = "" // User input for city name
 
@@ -24,25 +11,38 @@ struct CityListView: View {
             TextField("Enter city name...", text: $cityName)
                 .padding()
                 .textFieldStyle(RoundedBorderTextFieldStyle())
-                .onChange(of: cityName) { newValue in
-                    handleSearch(newValue)
+                .onChange(of: cityName) {
+                    handleSearch(cityName)
                 }
 
-            // City List
             if cityViewModel.isLoading {
                 ProgressView("Loading cities...")
                     .padding()
+            } else if cityViewModel.cities.isEmpty && !cityName.isEmpty {
+                Text("No cities found.")
+                    .foregroundColor(.gray)
+                    .padding()
             } else {
+                // City List
                 List(cityViewModel.cities) { city in
-                    VStack(alignment: .leading) {
-                        Text(city.name.capitalized)
-                            .font(.headline)
-                        Text("Country: \(city.country)")
-                            .font(.subheadline)
-                            .foregroundColor(.gray)
-                        Text("Population: \(city.population)")
-                            .font(.subheadline)
-                            .foregroundColor(.gray)
+                    Button(action: {
+                        selectCity(city)
+                    }) {
+                        HStack {
+                            VStack(alignment: .leading) {
+                                Text(city.name)
+                                    .font(.headline)
+                                Text("\(city.country) • Population: \(city.population)")
+                                    .font(.subheadline)
+                                    .foregroundColor(.gray)
+                            }
+                            Spacer()
+                            if selectedCity == city {
+                                Image(systemName: "checkmark.circle.fill")
+                                    .foregroundColor(.blue)
+                            }
+                        }
+                        .padding()
                     }
                 }
                 .listStyle(PlainListStyle())
@@ -51,6 +51,7 @@ struct CityListView: View {
         .padding()
     }
 
+    // Handle city search
     private func handleSearch(_ query: String) {
         guard !query.isEmpty else {
             cityViewModel.cities = [] // Clear results if input is empty
@@ -61,8 +62,16 @@ struct CityListView: View {
             await cityViewModel.getData(for: query)
         }
     }
+
+    // Handle city selection
+    private func selectCity(_ city: City) {
+        selectedCity = city
+        print("Selected city: \(city.name), Latitude: \(city.latitude), Longitude: \(city.longitude)")
+    }
 }
 
 #Preview {
-    CityListView()
+    @State var selectedCity: City? = nil // Bind the selected city to preview
+
+    CityListView(selectedCity: $selectedCity) // Pass the binding to CityListView
 }

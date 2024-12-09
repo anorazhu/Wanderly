@@ -1,4 +1,3 @@
-import MapKit
 import SwiftUI
 
 struct ExpandableActivitiesView: View {
@@ -14,11 +13,11 @@ struct ExpandableActivitiesView: View {
                     VStack(spacing: 15) {
                         ForEach(activities, id: \.id) { activity in
                             VStack(alignment: .leading, spacing: 10) {
-                                Text(activity.name)
+                                Text(activity.name ?? "Unknown Activity")
                                     .font(.headline)
                                     .fontWeight(.semibold)
                                 
-                                if let description = activity.description {
+                                if let description = activity.shortDescription {
                                     Text(description)
                                         .font(.caption)
                                         .foregroundColor(.gray)
@@ -31,14 +30,8 @@ struct ExpandableActivitiesView: View {
                                         .foregroundColor(.blue)
                                 }
                                 
-                                if let rating = activity.rating {
-                                    Text("Rating: \(String(format: "%.1f", rating))/5")
-                                        .font(.caption)
-                                        .foregroundColor(.orange)
-                                }
-                                
-                                if let pictures = activity.pictures, let pictureURL = pictures.first {
-                                    AsyncImage(url: URL(string: pictureURL)) { image in
+                                if let pictures = activity.pictures, let pictureURL = pictures.first, let url = URL(string: pictureURL) {
+                                    AsyncImage(url: url) { image in
                                         image
                                             .resizable()
                                             .scaledToFill()
@@ -51,70 +44,25 @@ struct ExpandableActivitiesView: View {
                                 }
                             }
                             .padding()
-                            .frame(maxWidth: .infinity) // Set the width of each card to fill the available space
+                            .frame(maxWidth: .infinity)
                             .background(Color.white)
                             .cornerRadius(10)
                             .shadow(color: .gray.opacity(0.3), radius: 4, x: 0, y: 2)
                         }
-
-                        NavigationLink(destination: ActivityView(destination: city, selectedTab: $selectedTab)) {
-                            Text("Add More Activities?")
-                                .font(.headline)
-                                .foregroundColor(.blue)
-                                .padding()
-                                .frame(maxWidth: .infinity) // Make button width the same
-                                .background(Color.white)
-                                .cornerRadius(10)
-                                .shadow(color: .gray.opacity(0.3), radius: 4, x: 0, y: 2)
-                        }
-                        .padding(.top)
                     }
                     .padding()
                 }
-                .frame(maxHeight: 200) // Make sure the scroll view uses all available space
+                .frame(maxHeight: 300) // Ensure the scroll view fits well
             }
         }
         .animation(.easeInOut, value: isExpanded)
-        .frame(maxWidth: .infinity) // Ensures the expandable view fills the screen width
+        .frame(maxWidth: .infinity)
     }
 }
 
+// Preview for ExpandableActivitiesView
 #Preview {
-    // Sample data for activities
-    let city = "Paris"
-    let sampleActivities = [
-        Activity(
-            id: "1",
-            name: "Eiffel Tower",
-            description: "Visit the iconic Eiffel Tower.",
-            geoCode: Activity.GeoCode(latitude: 48.8584, longitude: 2.2945),
-            price: Activity.Price(amount: "25", currencyCode: "EUR"),
-            rating: 4.8,
-            pictures: ["https://example.com/eiffel.jpg"]
-        ),
-        Activity(
-            id: "2",
-            name: "Louvre Museum",
-            description: "Explore the world's largest art museum.",
-            geoCode: Activity.GeoCode(latitude: 48.8606, longitude: 2.3376),
-            price: Activity.Price(amount: "15", currencyCode: "EUR"),
-            rating: 4.7,
-            pictures: ["https://example.com/louvre.jpg"]
-        ),
-        Activity(
-            id: "3",
-            name: "Seine River Cruise",
-            description: "Take a relaxing cruise along the Seine.",
-            geoCode: Activity.GeoCode(latitude: 48.8566, longitude: 2.3522),
-            price: nil,
-            rating: 4.5,
-            pictures: nil
-        )
-    ]
-
-    // Use a Binding for `isExpanded`
+    let sampleActivities = Activity.sampleActivities
     @State var isExpanded = true
-
-    // Return the preview
-    ExpandableActivitiesView(activities: sampleActivities, city: city, selectedTab: .constant(1), isExpanded: $isExpanded)
+    ExpandableActivitiesView(activities: sampleActivities, city: "Paris", selectedTab: .constant(1), isExpanded: $isExpanded)
 }

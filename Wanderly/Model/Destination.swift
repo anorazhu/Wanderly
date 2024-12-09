@@ -7,10 +7,10 @@
 
 import Foundation
 
-struct DestinationProfile: Identifiable {
-    let id = UUID()
+struct DestinationProfile {
     let name: String
     let image: String
     let description: String
+    let latitude: Double // Add latitude
+    let longitude: Double // Add longitude
 }
-

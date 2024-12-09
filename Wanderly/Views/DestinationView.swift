@@ -1,49 +1,66 @@
-//
-//  DestinationSuggestionsView.swift
-//  Wanderly
-//
-//  Created by Anora Zhu on 12/4/24.
-//
-
 import SwiftUI
 
 struct DestinationView: View {
     @Binding var selectedTab: Int
-    @State private var selectedMood: String = "Relaxed"
-    @State private var selectedBudget: String = "Moderate"
-    @State private var selectedDistance: Double = 50.0
-    @State private var isEditing: Bool = false // Toggle edit sheet
-
-    // Mock data for cities
-    let mockDestinations: [DestinationProfile] = [
-        DestinationProfile(name: "Paris", image: "Paris", description: "The city of love and art. Enjoy the Eiffel Tower and Louvre."),
-        DestinationProfile(name: "New York", image: "nyc", description: "The city that never sleeps. Visit Central Park and Times Square."),
-        DestinationProfile(name: "Tokyo", image: "tokyo", description: "A bustling metropolis with amazing food and culture."),
-        DestinationProfile(name: "Rome", image: "rome", description: "Step back in time with Rome’s rich history and architecture."),
-        DestinationProfile(name: "Sydney", image: "sydney", description: "Famous for its opera house and beautiful beaches.")
-    ]
+    @Binding var selectedMood: String
+    @Binding var selectedBudget: String
+    @Binding var selectedDistance: Double
+    
+    @State private var isEditing: Bool = false
+    @State private var cityViewModel = CityViewModel()
+    
+    var filteredDestinations: [City] {
+        cityViewModel.cities.filter { city in
+            let moodMatches = matchesMood(for: city)
+            let distanceMatches = matchesDistance(for: city)
+            return moodMatches && distanceMatches
+        }
+    }
     
     var body: some View {
         NavigationView {
             VStack(spacing: 20) {
-                // Title Section
-                
+                // Header Section
                 HStack {
-                    // Destination Title
                     DestinationTitle()
-
-                    Spacer() // Pushes the title to the left
-
-                    // Edit Button
+                    Spacer()
                     EditButton(isEditing: $isEditing)
-                        .padding(.vertical, 5) // Adjust the padding as needed
-                        .frame(width: 100) // You can set a fixed width for the button if needed
+                        .frame(width: 100)
                 }
-
+                
                 Divider()
-
-                // Destination Profiles
-                DestinationProfiles(selectedTab: $selectedTab, destinations: mockDestinations)
+                
+                // Destination List or Loading State
+                if cityViewModel.isLoading {
+                    ProgressView("Loading cities...")
+                        .padding()
+                } else if filteredDestinations.isEmpty {
+                    Text("No cities match your preferences.")
+                        .foregroundColor(.gray)
+                        .padding()
+                } else {
+                    ScrollView(.vertical, showsIndicators: false) {
+                        LazyVStack(spacing: 20) {
+                            ForEach(filteredDestinations, id: \.name) { city in
+                                NavigationLink(
+                                    destination: ActivityView(
+                                        destination: city.name,
+                                        latitude: city.latitude,
+                                        longitude: city.longitude,
+                                        mood: Mood(rawValue: selectedMood), // Ensure correct Mood enum conversion
+                                        budget: selectedBudget,
+                                        radius: Int(selectedDistance),
+                                        selectedTab: $selectedTab
+                                    )
+                                ) {
+                                    DestinationProfileCard(city: city)
+                                }
+                                .buttonStyle(PlainButtonStyle())
+                            }
+                        }
+                        .padding(.horizontal)
+                    }
+                }
             }
             .navigationTitle("")
             .navigationBarBackButtonHidden()
@@ -55,7 +72,61 @@ struct DestinationView: View {
                     selectedDistance: $selectedDistance
                 )
             }
+            .task {
+                // Fetch cities dynamically based on user preferences
+                await cityViewModel.getData(for: "") // Adjust query if needed
+            }
         }
+    }
+    
+    private func matchesMood(for city: City) -> Bool {
+        switch selectedMood {
+        case "Relaxed":
+            return city.population < 100_000
+        case "Adventurous":
+            return city.population >= 100_000 && city.population <= 500_000
+        case "Cultural":
+            return city.population > 500_000
+        default:
+            return false
+        }
+    }
+    
+    private func matchesDistance(for city: City) -> Bool {
+        // Placeholder for distance calculation
+        return selectedDistance >= 50.0
+    }
+}
+
+struct DestinationProfileCard: View {
+    let city: City
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            //            AsyncImage(url: URL(string: city.imageURL)) { image in
+            //                image
+            //                    .resizable()
+            //                    .aspectRatio(contentMode: .fill)
+            //                    .frame(maxWidth: .infinity, maxHeight: 200)
+            //                    .clipped()
+            //                    .cornerRadius(15)
+            //            } placeholder: {
+            //                ProgressView()
+            //            }
+            
+            VStack(alignment: .leading, spacing: 5) {
+                Text(city.name)
+                    .font(.title2)
+                    .fontWeight(.bold)
+                Text("Population: \(city.population.formatted())")
+                    .font(.subheadline)
+                    .foregroundColor(.gray)
+            }
+            .padding()
+        }
+        .background(Color.white)
+        .cornerRadius(15)
+        .shadow(color: .gray.opacity(0.3), radius: 4, x: 0, y: 2)
     }
 }
 
@@ -70,54 +141,34 @@ struct DestinationTitle: View {
 
 struct EditButton: View {
     @Binding var isEditing: Bool
-
+    
     var body: some View {
-        Button {
+        Button(action: {
             withAnimation {
-                isEditing.toggle() // Toggle editing preferences
+                isEditing.toggle()
             }
-
-        } label: {
-            Text("Edit")
+        }) {
+            Text(isEditing ? "Done" : "Edit")
                 .fontWeight(.bold)
                 .padding()
                 .frame(maxWidth: .infinity)
+                .background(isEditing ? Color.red : Color.blue)
+                .foregroundColor(.white)
                 .cornerRadius(10)
         }
         .padding(.horizontal)
     }
 }
 
-struct DestinationProfiles: View {
-    @Binding var selectedTab: Int
-    let destinations: [DestinationProfile] // Receiving the mock data here
-
-    var body: some View {
-        ScrollView(.vertical, showsIndicators: false) {
-            LazyVStack(spacing: 20) {
-                ForEach(destinations, id: \.name) { destination in
-                    NavigationLink(
-                        destination: ActivityView(destination: destination.name, selectedTab: $selectedTab)
-                    ) {
-                        DestinationProfileCard(profile: destination)
-                    }
-                    .buttonStyle(PlainButtonStyle())
-                    .padding(.horizontal)
-                }
-            }
-            .padding(.vertical)
-        }
-    }
-}
 
 struct EditPreferencesView: View {
     @Binding var selectedMood: String
     @Binding var selectedBudget: String
     @Binding var selectedDistance: Double
-
+    
     let moods = ["Relaxed", "Adventurous", "Cultural"]
     let budgets = ["Cheap", "Moderate", "Luxury"]
-
+    
     var body: some View {
         NavigationView {
             VStack(spacing: 30) {
@@ -125,9 +176,9 @@ struct EditPreferencesView: View {
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .padding(.top)
-
+                
                 Divider()
-
+                
                 // Mood Picker
                 VStack(alignment: .leading, spacing: 10) {
                     Text("Mood")
@@ -140,7 +191,7 @@ struct EditPreferencesView: View {
                     .pickerStyle(SegmentedPickerStyle())
                 }
                 .padding(.horizontal)
-
+                
                 // Budget Picker
                 VStack(alignment: .leading, spacing: 10) {
                     Text("Budget")
@@ -153,8 +204,8 @@ struct EditPreferencesView: View {
                     .pickerStyle(SegmentedPickerStyle())
                 }
                 .padding(.horizontal)
-
-                // Distance Picker
+                
+                // Distance Slider
                 VStack(alignment: .leading, spacing: 10) {
                     Text("Distance")
                         .font(.headline)
@@ -166,63 +217,31 @@ struct EditPreferencesView: View {
                         .foregroundColor(.gray)
                 }
                 .padding(.horizontal)
-
+                
                 Spacer()
-
-                // Done Button
-                Button(action: {
-                    // Dismiss the sheet
-                }) {
-                    Text("Done")
-                        .fontWeight(.bold)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
+                
+                Button("Done") {
+                    // Add logic to close the sheet
                 }
+                .font(.headline)
+                .frame(maxWidth: .infinity)
+                .padding()
+                .background(Color.blue)
+                .foregroundColor(.white)
+                .cornerRadius(10)
                 .padding(.horizontal)
-                .padding(.bottom, 20)
             }
+            .padding()
         }
-    }
-}
-
-struct DestinationProfileCard: View {
-    let profile: DestinationProfile
-
-    var body: some View {
-        VStack(alignment: .leading) {
-            // Image
-            Image(profile.image)
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(maxWidth: .infinity, maxHeight: 200)
-                .clipped()
-                .cornerRadius(15)
-
-            // Details
-            VStack(alignment: .leading, spacing: 5) {
-                Text(profile.name)
-                    .font(.title2)
-                    .fontWeight(.bold)
-
-                Text(profile.description)
-                    .font(.subheadline)
-                    .foregroundColor(.gray)
-            }
-            .padding(.vertical, 10)
-            .padding(.horizontal)
-        }
-        .background(Color.white)
-        .cornerRadius(15)
     }
 }
 
 
 #Preview {
-    NavigationStack {
-        DestinationView(selectedTab: .constant(1))
-    }
+    DestinationView(
+        selectedTab: .constant(1),
+        selectedMood: .constant("Relaxed"),
+        selectedBudget: .constant("Moderate"),
+        selectedDistance: .constant(50.0)
+    )
 }
-

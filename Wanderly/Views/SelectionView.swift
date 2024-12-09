@@ -69,8 +69,9 @@ struct SelectionView: View {
                 
             } else if selectedOption == "City" {
                 // City Search Bar and Picker
-                
-                CityListView()
+                Text("Select City:")
+                    .font(.headline)
+                CityListView(selectedCity: $selectedCity)
                 
             }
             

@@ -2,6 +2,10 @@ import SwiftUI
 import Firebase
 import FirebaseAuth
 
+import SwiftUI
+import Firebase
+import FirebaseAuth
+
 struct WelcomeView: View {
     @Binding var selectedTab: Int
     @State private var username = ""
@@ -12,6 +16,7 @@ struct WelcomeView: View {
     @State private var selectedMood: String = "Relaxed" // Picker for mood
     @State private var selectedBudget: String = "Moderate" // Picker for budget
     @State private var selectedDistance: Double = 50.0 // Slider for distance
+    @State private var selectedCity: City? // Store selected city
     
     var body: some View {
         NavigationStack {
@@ -34,13 +39,13 @@ struct WelcomeView: View {
                                     hasDestinationInMind: $hasDestinationInMind,
                                     currentStep: $currentStep,
                                     isHeaderExpanded: $isHeaderExpanded,
-                                    completedSteps: $completedSteps, // Pass completed steps
+                                    completedSteps: $completedSteps,
                                     proxy: proxy
                                 )
                                 
                                 if hasDestinationInMind == true, currentStep >= 1 {
                                     Step2View(
-                                         // Pass ViewModel
+                                        selectedCity: $selectedCity,
                                         currentStep: $currentStep,
                                         completedSteps: $completedSteps,
                                         proxy: proxy
@@ -49,7 +54,7 @@ struct WelcomeView: View {
                                 
                                 if currentStep >= 2 {
                                     Step3View(
-                                        selectedMood: $selectedMood, // Bind to state
+                                        selectedMood: $selectedMood,
                                         currentStep: $currentStep,
                                         completedSteps: $completedSteps,
                                         proxy: proxy
@@ -58,7 +63,7 @@ struct WelcomeView: View {
                                 
                                 if currentStep >= 3 {
                                     Step4View(
-                                        selectedBudget: $selectedBudget, // Bind to state
+                                        selectedBudget: $selectedBudget,
                                         currentStep: $currentStep,
                                         completedSteps: $completedSteps,
                                         proxy: proxy
@@ -69,14 +74,17 @@ struct WelcomeView: View {
                                     Step5View(
                                         selectedTab: $selectedTab,
                                         hasDestinationInMind: hasDestinationInMind,
-                                        selectedDistance: $selectedDistance // Bind to state
+                                        selectedDistance: $selectedDistance,
+                                        selectedMood: $selectedMood,
+                                        selectedBudget: $selectedBudget,
+                                        selectedCity: $selectedCity
                                     )
                                 }
                             }
                         }
-                        .onChange(of: currentStep) { newStep in
+                        .onChange(of: currentStep) {
                             withAnimation {
-                                proxy.scrollTo(newStep, anchor: .bottom)
+                                proxy.scrollTo(currentStep, anchor: .bottom)
                             }
                         }
                     }
@@ -188,39 +196,90 @@ struct Step1View: View {
 }
 
 struct Step2View: View {
+    @Binding var selectedCity: City?
     @Binding var currentStep: Int
     @Binding var completedSteps: Set<Int>
     let proxy: ScrollViewProxy
-    
-    @State private var cityInput = "" // Track city input
-    @State private var countryInput = "" // Track country input
-    
+    @State private var cityName: String = "" // User input for city search
+    @State private var cityViewModel = CityViewModel() // ViewModel for fetching cities
+
     var body: some View {
         VStack(spacing: 15) {
-            Text("Select a Continent, Country or City you want to explore!")
+            Text("Select the City you want to explore!")
                 .font(.headline)
-            
-            SelectionView()
-            
-            if !completedSteps.contains(1) {
-                Button("Next") {
+
+            // Search Bar for City Input
+            TextField("Enter city name...", text: $cityName, onCommit: {
+                Task {
+                    await cityViewModel.getData(for: cityName)
+                }
+            })
+            .padding()
+            .textFieldStyle(RoundedBorderTextFieldStyle())
+            .onChange(of: cityName) { newValue in
+                if newValue.isEmpty {
+                    cityViewModel.cities = [] // Clear results if input is cleared
+                }
+            }
+
+            // Display Search Results
+            if cityViewModel.isLoading {
+                ProgressView("Searching for cities...")
+                    .padding()
+            } else if cityViewModel.cities.isEmpty {
+                Text("No cities found. Please try a different name.")
+                    .foregroundColor(.gray)
+                    .padding()
+            } else {
+                ScrollView {
+                    LazyVStack(spacing: 10) {
+                        ForEach(cityViewModel.cities, id: \.id) { city in
+                            Button(action: {
+                                selectCity(city)
+                            }) {
+                                HStack {
+                                    Text(city.name)
+                                    Spacer()
+                                    if selectedCity == city {
+                                        Image(systemName: "checkmark.circle.fill")
+                                            .foregroundColor(.blue)
+                                    }
+                                }
+                                .padding()
+                                .background(selectedCity == city ? Color.blue.opacity(0.2) : Color.clear)
+                                .cornerRadius(10)
+                            }
+                            .buttonStyle(PlainButtonStyle())
+                        }
+                    }
+                }
+                .padding(.horizontal)
+            }
+
+            // Next Button
+            Button("Next") {
+                if selectedCity != nil {
                     withAnimation {
                         currentStep = 2
                         completedSteps.insert(1)
                         proxy.scrollTo(2, anchor: .bottom)
                     }
                 }
-                .frame(maxWidth: .infinity, minHeight: 50)
-                .background(Color.blue)
-                .foregroundColor(.white)
-                .cornerRadius(10)
             }
+            .frame(maxWidth: .infinity, minHeight: 50)
+            .background(selectedCity == nil ? Color.gray : Color.blue)
+            .foregroundColor(.white)
+            .cornerRadius(10)
+            .disabled(selectedCity == nil) // Disable if no city selected
         }
         .padding()
-//        .task {
-//            await destinationViewModel.fetchCityByName(namePrefix: cityInput)
-//        }
         .id(1)
+    }
+
+    // Save selected city to binding
+    private func selectCity(_ city: City) {
+        selectedCity = city
+        print("Selected city: \(city.name), Latitude: \(city.latitude), Longitude: \(city.longitude)")
     }
 }
 
@@ -304,35 +363,68 @@ struct Step5View: View {
     @Binding var selectedTab: Int
     var hasDestinationInMind: Bool?
     @Binding var selectedDistance: Double
-    
+    @Binding var selectedMood: String
+    @Binding var selectedBudget: String
+    @Binding var selectedCity: City?
+
     var body: some View {
         VStack(spacing: 20) {
-            Text("How far are you willing to travel?")
-                .font(.headline)
-            
-            Slider(value: $selectedDistance, in: 1...100, step: 1) {
-                Text("Distance: \(Int(selectedDistance)) km")
-            }
-            .padding()
-            
-            NavigationLink {
-                if hasDestinationInMind == true {
-                    ActivityView(destination: "", selectedTab: $selectedTab)
+            if hasDestinationInMind == true {
+                if let city = selectedCity {
+                    Text("Explore Activities in \(city.name)!")
+                        .font(.headline)
                 } else {
-                    DestinationView(selectedTab: $selectedTab)
+                    Text("No city selected. Please select a city to explore activities.")
+                        .foregroundColor(.red)
+                        .font(.headline)
+                }
+            } else {
+                Text("Explore cities within \(Int(selectedDistance)) km around your location")
+                    .font(.headline)
+            }
+            
+            if hasDestinationInMind == false {
+                // Slider for radius when exploring nearby cities
+                Slider(value: $selectedDistance, in: 1...100, step: 1) {
+                    Text("Distance: \(Int(selectedDistance)) km")
+                }
+                .padding()
+            }
+
+            NavigationLink {
+                if hasDestinationInMind == true, let city = selectedCity {
+                    // Navigate to ActivityView for selected city
+                    ActivityView(
+                        destination: city.name,
+                        latitude: city.latitude,
+                        longitude: city.longitude,
+                        mood: Mood(rawValue: selectedMood),
+                        budget: selectedBudget,
+                        radius: Int(selectedDistance),
+                        selectedTab: $selectedTab
+                    )
+                } else {
+                    // Navigate to DestinationView for nearby cities
+                    DestinationView(
+                        selectedTab: $selectedTab,
+                        selectedMood: $selectedMood,
+                        selectedBudget: $selectedBudget,
+                        selectedDistance: $selectedDistance
+                    )
                 }
             } label: {
-                Text("Explore!")
+                Text(hasDestinationInMind == true ? "Explore Activities" : "Explore Cities")
             }
+            .disabled(hasDestinationInMind == true && selectedCity == nil) // Disable button if no city is selected
             .frame(maxWidth: .infinity, minHeight: 50)
-            .background(Color.blue)
+            .background(hasDestinationInMind == true && selectedCity == nil ? Color.gray : Color.blue)
             .foregroundColor(.white)
             .cornerRadius(10)
         }
         .padding()
-        .id(4)
     }
 }
+
 
 #Preview {
     WelcomeView(selectedTab: .constant(0))
