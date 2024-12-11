@@ -44,12 +44,12 @@ struct BucketListDetailView: View {
                 // Map Section
                 Map(coordinateRegion: $region, annotationItems: activities) { activity in
                     MapAnnotation(coordinate: CLLocationCoordinate2D(latitude: activity.geoCode.latitude, longitude: activity.geoCode.longitude)) {
-                        Button(action: {
+                        Button {
                             selectedActivity = activity
                             withAnimation {
                                 showPopup = true
                             }
-                        }) {
+                        } label: {
                             VStack {
                                 Image(systemName: "mappin.circle.fill")
                                     .resizable()
@@ -102,11 +102,11 @@ struct BucketListDetailView: View {
                                     .foregroundStyle(.blue)
                             }
 
-                            Button(action: {
+                            Button {
                                 withAnimation {
                                     showPopup = false
                                 }
-                            }) {
+                            } label: {
                                 Text("Close")
                                     .fontWeight(.bold)
                                     .padding()

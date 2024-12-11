@@ -25,9 +25,9 @@ struct CityListView: View {
             } else {
                 // City List
                 List(cityViewModel.cities) { city in
-                    Button(action: {
+                    Button{
                         selectCity(city)
-                    }) {
+                    } label: {
                         HStack {
                             VStack(alignment: .leading) {
                                 Text(city.name)

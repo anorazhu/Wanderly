@@ -19,7 +19,7 @@ struct ActivityCard: View {
                         image
                             .resizable()
                             .scaledToFill()
-                            .frame(width: 120, height: 150)
+                            .frame(width: 130, height: 150)
                             .cornerRadius(10)
                     } placeholder: {
                         ProgressView()
@@ -50,12 +50,12 @@ struct ActivityCard: View {
             .shadow(color: Color.gray.opacity(0.2), radius: 5, x: 0, y: 5)
 
             // Toggle Button
-            Button(action: {
+            Button {
                 toggleSelection(for: activity)
-            }) {
+            } label: {
                 Image(systemName: selectedActivities.contains(activity) ? "checkmark.circle.fill" : "circle")
                     .font(.system(size: 24))
-                    .foregroundStyle(selectedActivities.contains(activity) ? .questionButton : .gray)
+                    .foregroundStyle(selectedActivities.contains(activity) ? .white : .gray)
                     .padding()
             }
         }
