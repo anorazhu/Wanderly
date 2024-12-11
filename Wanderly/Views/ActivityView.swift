@@ -70,7 +70,10 @@ struct ActivityView: View {
                 
                 // Navigation Link for Bucket List
                 NavigationLink {
-                    BucketListView(selectedTab: $selectedTab) // Destination view
+                    BucketListView(selectedTab: $selectedTab)
+                        .onAppear {
+                                    selectedTab = 1 // Change the tab to Bucket List (tab 1)
+                                }
                 } label: {
                     if isSaving {
                         ProgressView()
@@ -78,7 +81,7 @@ struct ActivityView: View {
                             .background(Color.gray)
                             .cornerRadius(10)
                     } else {
-                        Text("Go to Bucket List")
+                        Text("Save!")
                             .fontWeight(.bold)
                             .frame(maxWidth: .infinity, minHeight: 50)
                             .background(selectedActivities.isEmpty ? .button.opacity(0.4) : .button)
