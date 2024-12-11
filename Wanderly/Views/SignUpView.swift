@@ -80,7 +80,7 @@ struct SignUpView: View {
                             register()
                         }
                         .fontWeight(.bold)
-                        .foregroundColor(.white)
+                        .foregroundStyle(.white)
                         .frame(maxWidth: .infinity)
                         .padding()
                         .background(Color.button)
@@ -96,14 +96,14 @@ struct SignUpView: View {
                 // Already have an account? Login Link
                 HStack {
                     Text("Already have an account?")
-                        .foregroundColor(.header)
+                        .foregroundStyle(.header)
                         .font(.footnote)
                     
                     NavigationLink {
                         LoginView() // Navigate back to LoginView
                     } label: {
                         Text("Log In")
-                            .foregroundColor(.links)
+                            .foregroundStyle(.links)
                             .font(.footnote)
                             .bold()
                     }

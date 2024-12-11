@@ -21,7 +21,7 @@ struct BucketListView: View {
                         .padding()
                 } else if bucketList.isEmpty {
                     Text("Your bucket list is empty.")
-                        .foregroundColor(.gray)
+                        .foregroundStyle(.gray)
                         .padding()
                 } else {
                     ScrollView {
@@ -42,6 +42,7 @@ struct BucketListView: View {
             .background(Color(.systemBackground))
             .onAppear(perform: fetchBucketList) // Fetch data when the view appears
         }
+        .navigationBarBackButtonHidden()
     }
 
     private func fetchBucketList() {
@@ -89,7 +90,7 @@ struct BucketListCard: View {
             // City Description
             Text(city.description)
                 .font(.caption)
-                .foregroundColor(.gray)
+                .foregroundStyle(.gray)
                 .multilineTextAlignment(.center)
                 .lineLimit(2)
                 .padding(.horizontal, 5)

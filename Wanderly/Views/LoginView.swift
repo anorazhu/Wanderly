@@ -69,7 +69,7 @@ struct LoginView: View {
                         Button("Forgot Password") {
                             // Handle forgot password action
                         }
-                        .foregroundColor(.links)
+                        .foregroundStyle(.links)
                         .font(.footnote)
                         .padding(.top, 5)
 
@@ -78,7 +78,7 @@ struct LoginView: View {
                             login()
                         }
                         .fontWeight(.bold)
-                        .foregroundColor(.white)
+                        .foregroundStyle(.white)
                         .frame(maxWidth: .infinity)
                         .padding()
                         .background(Color.button)
@@ -94,14 +94,14 @@ struct LoginView: View {
                 // Navigation to Sign Up View
                 HStack {
                     Text("New to App?")
-                        .foregroundColor(.header)
+                        .foregroundStyle(.header)
                         .font(.footnote)
                     
                     NavigationLink {
                         SignUpView() // Navigate to SignUpView when pressed
                     } label: {
                         Text("Join Now")
-                            .foregroundColor(.links)
+                            .foregroundStyle(.links)
                             .font(.footnote)
                             .bold()
                     }

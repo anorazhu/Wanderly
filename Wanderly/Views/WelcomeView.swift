@@ -90,12 +90,12 @@ struct HeaderView: View {
                 Text("Welcome! Let's Explore")
                     .font(.largeTitle)
                     .fontWeight(.bold)
-                    .foregroundColor(.black)
+                    .foregroundStyle(.black)
             }
             
             Text("Plan your next travel destination")
                 .font(isHeaderExpanded ? .title2 : .headline)
-                .foregroundColor(.black)
+                .foregroundStyle(.black)
             
             Image("cloud") // Cloud Image
                 .resizable()
@@ -131,8 +131,8 @@ struct Step1View: View {
                 }
             }
             .frame(maxWidth: .infinity, minHeight: 50)
-            .background(Color.blue)
-            .foregroundColor(.white)
+            .background(.button)
+            .foregroundStyle(.white)
             .cornerRadius(10)
         }
         .padding()
@@ -169,19 +169,20 @@ struct Step2View: View {
                 ScrollView {
                     LazyVStack(spacing: 10) {
                         ForEach(cityViewModel.cities, id: \.id) { city in
-                            Button(action: {
+
+                            Button {
                                 selectedCity = city
-                            }) {
+                            } label: {
                                 HStack {
                                     Text(city.name)
                                     Spacer()
                                     if selectedCity == city {
                                         Image(systemName: "checkmark.circle.fill")
-                                            .foregroundColor(.blue)
+                                            .foregroundStyle(.blue)
                                     }
                                 }
                                 .padding()
-                                .background(selectedCity == city ? Color.blue.opacity(0.2) : Color.clear)
+                                .background(selectedCity == city ? .button.opacity(0.2) : Color.clear)
                                 .cornerRadius(10)
                             }
                         }
@@ -199,8 +200,8 @@ struct Step2View: View {
                     }
                 }
                 .frame(maxWidth: .infinity, minHeight: 50)
-                .background(selectedCity == nil ? Color.gray : Color.blue)
-                .foregroundColor(.white)
+                .background(selectedCity == nil ? .button.opacity(0.4) : .button)
+                .foregroundStyle(.white)
                 .cornerRadius(10)
                 .disabled(selectedCity == nil)
             }
@@ -238,8 +239,8 @@ struct Step3View: View {
                     }
                 }
                 .frame(maxWidth: .infinity, minHeight: 50)
-                .background(Color.blue)
-                .foregroundColor(.white)
+                .background(.button)
+                .foregroundStyle(.white)
                 .cornerRadius(10)
             }
         }
@@ -254,11 +255,11 @@ struct Step4View: View {
     @Binding var completedSteps: Set<Int>
     @Binding var selectedCity: City?
     @Binding var selectedMood: String
-    @Binding var selectedTab: Int
+    @Binding var selectedTab: Int // Pass `selectedTab` for bucket list navigation
     let proxy: ScrollViewProxy
-    
+
     @State private var navigateToActivities = false // State to handle navigation
-    
+
     var body: some View {
         VStack(spacing: 20) {
             Text("What is your budget?")
@@ -272,35 +273,41 @@ struct Step4View: View {
             .pickerStyle(SegmentedPickerStyle())
             .padding()
             
-            Button("Plan Activities") {
-                withAnimation {
-                    navigateToActivities = true
-                    completedSteps.insert(4) // Mark Step 4 as completed
-                }
-            }
-            .frame(maxWidth: .infinity, minHeight: 50)
-            .background((selectedCity == nil) ? Color.gray : Color.blue) // Disable if no city selected
-            .foregroundColor(.white)
-            .cornerRadius(10)
-            .disabled(selectedCity == nil)
             
             // NavigationLink to ActivityView
-            NavigationLink(
-                destination: ActivityView(
-                    destination: selectedCity?.name ?? "Unknown",
-                    latitude: selectedCity?.latitude ?? 0,
-                    longitude: selectedCity?.longitude ?? 0,
-                    mood: Mood(rawValue: selectedMood),
-                    budget: selectedBudget,
-                    selectedTab: $selectedTab
-                ),
-                isActive: $navigateToActivities
-            ) {
-                EmptyView()
+            NavigationLink {
+                ActivityView(
+                   destination: selectedCity?.name ?? "Unknown",
+                   latitude: selectedCity?.latitude ?? 0,
+                   longitude: selectedCity?.longitude ?? 0,
+                   mood: Mood(rawValue: selectedMood),
+                   budget: selectedBudget,
+                   selectedTab: $selectedTab // Pass selectedTab binding
+               )
+                .onAppear {
+                    resetToInitialState() // Reset the WelcomeView state in the background
+                }
+            } label: {
+                Text("Plan Activities")
+                        .frame(maxWidth: .infinity, minHeight: 50)
+                        .background((selectedCity == nil) ? .button.opacity(0.4) : .button) // Disable if no city selected
+                        .foregroundStyle(.white)
+                        .cornerRadius(10)
+                        .padding()
             }
+            .disabled(selectedCity == nil)
+
         }
         .padding()
         .id(4)
+    }
+    
+    private func resetToInitialState() {
+        currentStep = 1
+        completedSteps.removeAll()
+        selectedCity = nil
+        selectedMood = "Relaxed"
+        selectedBudget = "Moderate"
     }
 }
 

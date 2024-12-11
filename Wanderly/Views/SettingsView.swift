@@ -25,26 +25,25 @@ struct SettingsView: View {
                 .padding()
 
         
+            NavigationLink {
+                LoginView()
+            } label: {
+                Button {
+                    logOut()
+                } label: {
+                    Text("Log Out")
+                        .font(.title2)
+                        .foregroundStyle(.white)
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(Color.red)
+                        .cornerRadius(10)
+                        .shadow(color: .gray.opacity(0.3), radius: 5, x: 0, y: 2)
+                }
+                .padding([.horizontal, .top], 20)
 
-            // Logout Button
-            Button(action: {
-                logOut()
-            }) {
-                Text("Log Out")
-                    .font(.title2)
-                    .foregroundColor(.white)
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .background(Color.red)
-                    .cornerRadius(10)
-                    .shadow(color: .gray.opacity(0.3), radius: 5, x: 0, y: 2)
             }
-            .padding([.horizontal, .top], 20)
 
-            // Navigation Links
-            NavigationLink(destination: LoginView(), isActive: $navigateToLogin) {
-                EmptyView() // Invisible link to handle navigation
-            }
             
             Spacer()
         }

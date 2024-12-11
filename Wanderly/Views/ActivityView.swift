@@ -47,7 +47,7 @@ struct ActivityView: View {
                         .padding()
                 } else if viewModel.filteredActivities.isEmpty {
                     Text("No activities available.")
-                        .foregroundColor(.gray)
+                        .foregroundStyle(.gray)
                         .padding()
                 } else {
                     ScrollView(.vertical, showsIndicators: true) {
@@ -69,38 +69,40 @@ struct ActivityView: View {
                 Spacer()
                 
                 // Navigation Link for Bucket List
-                NavigationLink(destination: BucketListView(selectedTab: $selectedTab), isActive: $navigateToBucketList) {
-                    EmptyView()
-                }
-                
-                // Button to Save and Navigate
-                Button {
-                    saveToBucketList()
+                NavigationLink {
+                    BucketListView(selectedTab: $selectedTab) // Destination view
                 } label: {
                     if isSaving {
                         ProgressView()
+                            .frame(maxWidth: .infinity, minHeight: 50)
+                            .background(Color.gray)
+                            .cornerRadius(10)
                     } else {
                         Text("Go to Bucket List")
                             .fontWeight(.bold)
                             .frame(maxWidth: .infinity, minHeight: 50)
-                            .background(selectedActivities.isEmpty ? Color.gray : Color.green)
+                            .background(selectedActivities.isEmpty ? .button.opacity(0.4) : .button)
                             .cornerRadius(10)
-                            .foregroundColor(.white)
+                            .foregroundStyle(.white)
                     }
                 }
-                .disabled(selectedActivities.isEmpty || isSaving)
-                .padding(.horizontal)
+                .disabled(selectedActivities.isEmpty || isSaving) // Disable button during saving or when no activities are selected
+                .onTapGesture {
+                    if !isSaving && !selectedActivities.isEmpty {
+                        saveToBucketList() // Save the bucket list and navigate after
+                    }
+                }
+
             }
-            .padding()
-            .navigationTitle("Activities")
-            .navigationBarTitleDisplayMode(.inline)
-            .task {
-                await viewModel.fetchActivities(latitude: latitude, longitude: longitude, mood: mood)
-            }
+            
+        }
+        .padding()
+        .navigationTitle("Activities")
+        .navigationBarTitleDisplayMode(.inline)
+        .task {
+            await viewModel.fetchActivities(latitude: latitude, longitude: longitude, mood: mood)
         }
     }
-    
-    /// Save the current destination and activities to the Bucket List
     private func saveToBucketList() {
         guard !selectedActivities.isEmpty else { return }
         isSaving = true
@@ -122,6 +124,7 @@ struct ActivityView: View {
     }
 }
 
+
 #Preview {
     ActivityView(
         destination: "Paris",
@@ -129,7 +132,7 @@ struct ActivityView: View {
         longitude: 2.3569,
         mood: .relaxed, // Example Mood
         budget: "Moderate", // Example Budget
-
+        
         selectedTab: .constant(1)
     )
 }

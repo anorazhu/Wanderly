@@ -32,11 +32,11 @@ struct BucketListDetailView: View {
 
                 Text("Activities: \(activities.count)")
                     .font(.subheadline)
-                    .foregroundColor(.button)
+                    .foregroundStyle(.button)
             }
             .padding()
             .frame(maxWidth: .infinity, alignment: .leading)
-            .foregroundColor(.white.opacity(0.6))
+            .foregroundStyle(.white.opacity(0.6))
             .cornerRadius(15)
             .shadow(color: .gray.opacity(0.3), radius: 5, x: 0, y: 2)
 
@@ -93,13 +93,13 @@ struct BucketListDetailView: View {
                             Text(selectedActivity?.shortDescription ?? "No description available.")
                                 .font(.subheadline)
                                 .multilineTextAlignment(.center)
-                                .foregroundColor(.gray)
+                                .foregroundStyle(.gray)
 
                             if let price = selectedActivity?.price {
                                 Text("Price: \(price.amount ?? "N/A") \(price.currencyCode ?? "")")
                                     .font(.subheadline)
                                     .fontWeight(.semibold)
-                                    .foregroundColor(.blue)
+                                    .foregroundStyle(.blue)
                             }
 
                             Button(action: {
@@ -111,8 +111,8 @@ struct BucketListDetailView: View {
                                     .fontWeight(.bold)
                                     .padding()
                                     .frame(maxWidth: .infinity)
-                                    .background(Color.blue)
-                                    .foregroundColor(.white)
+                                    .background(.button)
+                                    .foregroundStyle(.white)
                                     .cornerRadius(10)
                             }
                         }

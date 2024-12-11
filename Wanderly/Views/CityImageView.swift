@@ -17,7 +17,7 @@ struct CityImageView: View {
                 ProgressView("Loading photo for \(cityName)...")
             } else if let errorMessage = viewModel.errorMessage {
                 Text(errorMessage)
-                    .foregroundColor(.red)
+                    .foregroundStyle(.red)
                     .padding()
             } else if let photoURL = viewModel.photoURL {
                 AsyncImage(url: URL(string: photoURL)) { image in
@@ -32,10 +32,9 @@ struct CityImageView: View {
                 }
             } else {
                 Text("No photo available.")
-                    .foregroundColor(.gray)
+                    .foregroundStyle(.gray)
             }
         }
-        .navigationTitle("Photo of \(cityName)")
         .task {
             await viewModel.fetchPhoto(for: cityName)
         }

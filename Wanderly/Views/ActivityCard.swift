@@ -41,7 +41,7 @@ struct ActivityCard: View {
                 // Activity Description
                 Text(activity.shortDescription ?? "No description available.")
                     .font(.subheadline)
-                    .foregroundColor(.gray)
+                    .foregroundStyle(.gray)
                     .lineLimit(2)
             }
             .padding()
@@ -55,7 +55,7 @@ struct ActivityCard: View {
             }) {
                 Image(systemName: selectedActivities.contains(activity) ? "checkmark.circle.fill" : "circle")
                     .font(.system(size: 24))
-                    .foregroundColor(selectedActivities.contains(activity) ? .questionButton : .gray)
+                    .foregroundStyle(selectedActivities.contains(activity) ? .questionButton : .gray)
                     .padding()
             }
         }
@@ -81,7 +81,7 @@ struct ActivityCard: View {
 
             let activityData: [String: Any] = [
                 "id": activity.id,
-                "name": activity.name,
+                "name": activity.name ?? "",
                 "description": activity.shortDescription ?? "",
                 "destination": destination,
                 "latitude": activity.geoCode.latitude,

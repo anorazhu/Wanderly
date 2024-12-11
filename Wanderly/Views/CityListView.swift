@@ -20,7 +20,7 @@ struct CityListView: View {
                     .padding()
             } else if cityViewModel.cities.isEmpty && !cityName.isEmpty {
                 Text("No cities found.")
-                    .foregroundColor(.gray)
+                    .foregroundStyle(.gray)
                     .padding()
             } else {
                 // City List
@@ -34,12 +34,12 @@ struct CityListView: View {
                                     .font(.headline)
                                 Text("\(city.country) • Population: \(city.population)")
                                     .font(.subheadline)
-                                    .foregroundColor(.gray)
+                                    .foregroundStyle(.gray)
                             }
                             Spacer()
                             if selectedCity == city {
                                 Image(systemName: "checkmark.circle.fill")
-                                    .foregroundColor(.blue)
+                                    .foregroundStyle(.blue)
                             }
                         }
                         .padding()

@@ -20,14 +20,14 @@ struct ExpandableActivitiesView: View {
                                 if let description = activity.shortDescription {
                                     Text(description)
                                         .font(.caption)
-                                        .foregroundColor(.gray)
+                                        .foregroundStyle(.gray)
                                         .lineLimit(2)
                                 }
                                 
                                 if let price = activity.price?.amount, let currency = activity.price?.currencyCode {
                                     Text("Price: \(price) \(currency)")
                                         .font(.caption)
-                                        .foregroundColor(.blue)
+                                        .foregroundStyle(.blue)
                                 }
                                 
                                 if let pictures = activity.pictures, let pictureURL = pictures.first, let url = URL(string: pictureURL) {
