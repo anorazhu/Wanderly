@@ -24,7 +24,7 @@ struct Links: Codable {
     }
 }
 
-struct Activity: Codable, Identifiable {
+struct Activity: Codable, Identifiable, Hashable {
     let id: String
     let name: String?
     let shortDescription: String?
@@ -33,6 +33,14 @@ struct Activity: Codable, Identifiable {
     let pictures: [String]?
     let bookingLink: String?
     let minimumDuration: String?
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    
+    static func == (lhs: Activity, rhs: Activity) -> Bool {
+        return lhs.id == rhs.id
+    }
 }
 
 struct GeoCode: Codable {

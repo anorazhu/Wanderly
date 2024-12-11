@@ -381,15 +381,21 @@ struct Step5View: View {
             } else {
                 Text("Explore cities within \(Int(selectedDistance)) km around your location")
                     .font(.headline)
-            }
-            
-            if hasDestinationInMind == false {
-                // Slider for radius when exploring nearby cities
+
+                // Slider for selecting distance/radius
                 Slider(value: $selectedDistance, in: 1...100, step: 1) {
                     Text("Distance: \(Int(selectedDistance)) km")
                 }
                 .padding()
+                .accentColor(.blue)
+
+                // Display selected distance below the slider
+                Text("Selected Distance: \(Int(selectedDistance)) km")
+                    .font(.subheadline)
+                    .foregroundColor(.gray)
             }
+
+            Spacer()
 
             NavigationLink {
                 if hasDestinationInMind == true, let city = selectedCity {
@@ -424,7 +430,6 @@ struct Step5View: View {
         .padding()
     }
 }
-
 
 #Preview {
     WelcomeView(selectedTab: .constant(0))
