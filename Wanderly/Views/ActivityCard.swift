@@ -9,7 +9,6 @@ struct ActivityCard: View {
     var destination: String
     var mood: Mood?
     var budget: String
-    var radius: Int
 
     var body: some View {
         ZStack(alignment: .topTrailing) {
@@ -20,11 +19,11 @@ struct ActivityCard: View {
                         image
                             .resizable()
                             .scaledToFill()
-                            .frame(width: 150, height: 150)
+                            .frame(width: 120, height: 150)
                             .cornerRadius(10)
                     } placeholder: {
                         ProgressView()
-                            .frame(width: 150, height: 150)
+                            .frame(width: 120, height: 150)
                     }
                 } else {
                     Rectangle()
@@ -89,7 +88,6 @@ struct ActivityCard: View {
                 "longitude": activity.geoCode.longitude,
                 "mood": mood?.rawValue ?? "",
                 "budget": budget,
-                "radius": radius,
                 "timestamp": Timestamp()
             ]
 
@@ -129,7 +127,6 @@ struct ActivityCard: View {
         selectedActivities: $selectedActivities, // Pass the state as a binding
         destination: "Paris", // Mock destination
         mood: .relaxed, // Mock mood
-        budget: "Moderate", // Mock budget
-        radius: 50 // Mock radius
+        budget: "Moderate" // Mock budget
     )
 }

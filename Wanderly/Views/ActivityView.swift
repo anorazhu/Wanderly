@@ -9,13 +9,12 @@ struct ActivityView: View {
     var longitude: Double
     var mood: Mood? // Accept mood
     var budget: String // Accept budget
-    var radius: Int // Accept radius (converted from distance)
     @Binding var selectedTab: Int
     @State private var selectedActivities: Set<Activity> = [] // Track selected activities
     @State private var viewModel = ActivityViewModel() // Dynamically fetch activities
     @State private var isSaving = false // Track saving state
     @State private var navigateToBucketList = false // Navigation state
-
+    
     var body: some View {
         NavigationStack {
             VStack(spacing: 20) {
@@ -25,9 +24,9 @@ struct ActivityView: View {
                     .fontWeight(.bold)
                     .multilineTextAlignment(.center)
                     .padding(.top)
-
+                
                 Divider()
-
+                
                 // Activity Filters Display
                 HStack {
                     VStack(alignment: .leading) {
@@ -35,15 +34,13 @@ struct ActivityView: View {
                             .font(.subheadline)
                         Text("Budget: \(budget)")
                             .font(.subheadline)
-                        Text("Radius: \(radius) km")
-                            .font(.subheadline)
                     }
                     Spacer()
                 }
                 .padding(.horizontal)
-
+                
                 Divider()
-
+                
                 // Activities List
                 if viewModel.isLoading {
                     ProgressView("Loading Activities...")
@@ -57,26 +54,25 @@ struct ActivityView: View {
                         LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 15), count: 2), spacing: 20) {
                             ForEach(viewModel.filteredActivities, id: \.id) { activity in
                                 ActivityCard(
-                                                                                                   activity: activity,
-                                                                                                   selectedActivities: $selectedActivities,
-                                                                                                   destination: destination,
-                                                                                                   mood: mood,
-                                                                                                   budget: budget,
-                                                                                                   radius: radius
-                                                                                               )
+                                    activity: activity,
+                                    selectedActivities: $selectedActivities,
+                                    destination: destination,
+                                    mood: mood,
+                                    budget: budget
+                                )
                             }
                         }
                         .padding(.horizontal)
                     }
                 }
-
+                
                 Spacer()
-
+                
                 // Navigation Link for Bucket List
                 NavigationLink(destination: BucketListView(selectedTab: $selectedTab), isActive: $navigateToBucketList) {
                     EmptyView()
                 }
-
+                
                 // Button to Save and Navigate
                 Button {
                     saveToBucketList()
@@ -99,16 +95,16 @@ struct ActivityView: View {
             .navigationTitle("Activities")
             .navigationBarTitleDisplayMode(.inline)
             .task {
-                await viewModel.fetchActivities(latitude: latitude, longitude: longitude, radius: radius, mood: mood)
+                await viewModel.fetchActivities(latitude: latitude, longitude: longitude, mood: mood)
             }
         }
     }
-
+    
     /// Save the current destination and activities to the Bucket List
     private func saveToBucketList() {
         guard !selectedActivities.isEmpty else { return }
         isSaving = true
-
+        
         let city = BucketListCity(
             name: destination,
             image: "default_image", // Placeholder image
@@ -117,7 +113,7 @@ struct ActivityView: View {
             longitude: longitude,
             activities: Array(selectedActivities)
         )
-
+        
         Task {
             await BucketListViewModel.saveCity(city: city)
             isSaving = false
@@ -133,7 +129,7 @@ struct ActivityView: View {
         longitude: 2.3569,
         mood: .relaxed, // Example Mood
         budget: "Moderate", // Example Budget
-        radius: 50, // Example Radius in kilometers
+
         selectedTab: .constant(1)
     )
 }

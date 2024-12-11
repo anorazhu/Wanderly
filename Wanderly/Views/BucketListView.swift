@@ -76,22 +76,9 @@ struct BucketListCard: View {
     var body: some View {
         VStack {
             // City Image
-            if let imageUrl = URL(string: city.image) {
-                AsyncImage(url: imageUrl) { image in
-                    image
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(height: 100)
-                        .clipped()
-                        .cornerRadius(10)
-                        .padding(.horizontal, 5)
-                } placeholder: {
-                    Color.gray
-                        .frame(height: 100)
-                        .cornerRadius(10)
-                        .padding(.horizontal, 5)
-                }
-            }
+            CityImageView(cityName: city.name)
+                .frame(height: 150)
+                .cornerRadius(10)
             
             // City Name
             Text(city.name)

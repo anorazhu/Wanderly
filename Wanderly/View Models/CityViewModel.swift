@@ -1,7 +1,6 @@
 import Foundation
 import Combine
 
-
 @Observable
 class CityViewModel {
     private struct Returned: Codable {
@@ -10,7 +9,7 @@ class CityViewModel {
     
     var cities: [City] = [] // List of cities
     var isLoading: Bool = false // Loading state
-    var selectedCity: City? 
+    var selectedCity: City?
     
     private let apiKey = "el+O/XWmPnht4SutCiyuKw==WS9rgr3jNqsKgjrW" // Replace with your actual API key
     private let baseURL = "https://api.api-ninjas.com/v1/city"
@@ -19,6 +18,7 @@ class CityViewModel {
         let error: String
     }
     
+    /// Fetches city data for a given name.
     func getData(for name: String) async {
         guard !name.isEmpty else {
             print("😡 ERROR: City name cannot be empty.")
@@ -65,8 +65,45 @@ class CityViewModel {
         isLoading = false
     }
     
+    /// Searches for a city by name.
     func searchCity(by name: String) -> City? {
         return cities.first(where: { $0.name.localizedCaseInsensitiveContains(name) })
     }
     
+    /// Recommends cities based on mood and budget.
+    func recommendCities(for mood: String, budget: String) -> [City] {
+        return cities.filter { city in
+            let inferredMood = inferMood(for: city)
+            let inferredBudget = inferBudget(for: city)
+            return inferredMood.contains(mood) && inferredBudget == budget
+        }
+    }
+    
+    /// Infers mood tags based on city attributes.
+    private func inferMood(for city: City) -> [String] {
+        var moods: [String] = []
+        
+        if city.is_capital {
+            moods.append("Cultural")
+        }
+        if city.population > 1_000_000 {
+            moods.append("Adventurous")
+        }
+        if city.population < 50_000 {
+            moods.append("Relaxed")
+        }
+        return moods
+    }
+    
+    /// Infers budget level based on population.
+    private func inferBudget(for city: City) -> String {
+        switch city.population {
+        case 0..<100_000:
+            return "Cheap"
+        case 100_000..<1_000_000:
+            return "Moderate"
+        default:
+            return "Luxury"
+        }
+    }
 }

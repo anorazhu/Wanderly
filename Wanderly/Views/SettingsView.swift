@@ -10,10 +10,10 @@ import FirebaseAuth
 
 struct SettingsView: View {
     @Binding var selectedTab: Int
-    @State private var navigateToLogin = false // Track navigation state
-    
+    @State private var navigateToLogin = false
+
     var body: some View {
-        VStack {
+        VStack(spacing: 20) {
             // Display settings options
             Text("Settings")
                 .font(.largeTitle)
@@ -23,6 +23,8 @@ struct SettingsView: View {
             Text("Your app settings go here.")
                 .font(.headline)
                 .padding()
+
+        
 
             // Logout Button
             Button(action: {
@@ -38,11 +40,12 @@ struct SettingsView: View {
                     .shadow(color: .gray.opacity(0.3), radius: 5, x: 0, y: 2)
             }
             .padding([.horizontal, .top], 20)
-            
-            // Handle navigation to login view
+
+            // Navigation Links
             NavigationLink(destination: LoginView(), isActive: $navigateToLogin) {
                 EmptyView() // Invisible link to handle navigation
             }
+            
             Spacer()
         }
         .navigationTitle("Settings")
