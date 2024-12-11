@@ -11,5 +11,3 @@ My project is called Wanderly, and app that lets the user "Wander Around The Wor
 </p>
 
 https://drive.google.com/file/d/1nCnz-VObZdJCPoUFUFu2EPjU79MXUwCs/view?usp=sharing
-
-
